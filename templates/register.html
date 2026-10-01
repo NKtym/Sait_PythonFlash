@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Регистрация</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 520px; margin: 60px auto; padding: 0 20px; }
+        .card { border: 1px solid #ddd; border-radius: 12px; padding: 30px; }
+        label { display: block; margin-top: 14px; margin-bottom: 6px; font-weight: bold; }
+        input { width: 100%; box-sizing: border-box; padding: 10px; border: 1px solid #aaa; border-radius: 8px; }
+        button, a { display: inline-block; margin-top: 20px; padding: 10px 16px; border-radius: 8px; border: 1px solid #333; background: #333; color: #fff; text-decoration: none; }
+        .ok { padding: 10px; border-radius: 8px; background: #e8f5e9; margin-top: 15px; }
+        .error { padding: 10px; border-radius: 8px; background: #ffebee; margin-top: 15px; }
+    </style>
+</head>
+<body>
+<div class="card">
+    <h1>Регистрация</h1>
+
+    {% if message %}
+        <div class="ok">{{ message }}</div>
+    {% endif %}
+    {% if error %}
+        <div class="error">{{ error }}</div>
+    {% endif %}
+
+    <form method="post">
+        <label for="name">Имя</label>
+        <input id="name" name="name" type="text" required>
+
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" required>
+
+        <label for="password">Пароль</label>
+        <input id="password" name="password" type="password" minlength="6" required>
+
+        <button type="submit">Зарегистрироваться</button>
+    </form>
+
+    <a href="/">← На главную</a>
+</div>
+</body>
+</html>
