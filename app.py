@@ -1,4 +1,4 @@
-import os
+=import os
 from urllib.parse import urlparse
 
 import psycopg2
@@ -78,6 +78,27 @@ def register():
                 error = "Не удалось сохранить данные в базе. Проверьте подключение к PostgreSQL."
 
     return render_template("register.html", message=message, error=error)
+
+
+@app.route("/admin")
+def admin():
+    """Simple admin page showing registered users (without password hashes)."""
+    try:
+        ensure_users_table()
+        with get_connection() as conn:
+            with conn.cursor() as cur:
+                cur.execute(
+                    """
+                    SELECT id, name, email, created_at
+                    FROM users
+                    ORDER BY id DESC
+                    """
+                )
+                users = cur.fetchall()
+        return render_template("admin.html", users=users)
+    except Exception as exc:
+        app.logger.exception("Admin page database error: %s", exc)
+        return render_template("admin.html", users=[], error="Не удалось получить данные из базы данных."), 500
 
 
 @app.route("/health")
